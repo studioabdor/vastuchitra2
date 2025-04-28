@@ -1,23 +1,23 @@
-FROM alpine:latest
-
-# Install required packages
-RUN apk add --no-cache \
-    docker \
-    docker-compose \
-    git \
-    bash
+FROM python:3.11-slim
 
 WORKDIR /app
 
-# Copy the docker-compose.yml file
-COPY docker-compose.yml .
+# Install system dependencies
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends \
+    build-essential \
+    && rm -rf /var/lib/apt/lists/*
 
-# Copy the backend and frontend directories
+# Copy requirements and install Python dependencies
+COPY vastuchitra-backend/requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Copy the application code
 COPY vastuchitra-backend/ ./vastuchitra-backend/
 COPY vastuchitra-frontend/ ./vastuchitra-frontend/
 
 # Expose the ports
 EXPOSE 8000 3000
 
-# Start the services
-CMD ["docker-compose", "up"] 
+# Start the backend service
+CMD ["python", "-m", "vastuchitra-backend.app"] 
