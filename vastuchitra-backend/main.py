@@ -44,14 +44,32 @@ class ImageGenerationRequest(BaseModel):
 @app.get("/health")
 async def health_check():
     """Health check endpoint for Railway deployment"""
-    return {
-        "status": "healthy",
-        "version": "1.0.0",
-        "services": {
-            "stable_diffusion": "operational",
-            "stripe": "operational"
+    try:
+        # Check if environment variables are set
+        env_vars = {
+            "STABLE_DIFFUSION_API_KEY": bool(Config.STABLE_DIFFUSION_API_KEY),
+            "STRIPE_SECRET_KEY": bool(Config.STRIPE_SECRET_KEY),
+            "FRONTEND_URL": bool(Config.FRONTEND_URL)
         }
-    }
+        
+        # Check if services are operational
+        services_status = {
+            "stable_diffusion": "operational" if Config.STABLE_DIFFUSION_API_KEY else "not_configured",
+            "stripe": "operational" if Config.STRIPE_SECRET_KEY else "not_configured"
+        }
+        
+        return {
+            "status": "healthy" if all(env_vars.values()) else "degraded",
+            "version": "1.0.0",
+            "environment": env_vars,
+            "services": services_status
+        }
+    except Exception as e:
+        return {
+            "status": "unhealthy",
+            "error": str(e),
+            "version": "1.0.0"
+        }
 
 @app.post("/api/generate-image")
 async def generate_image(request: ImageGenerationRequest):
