@@ -8,5 +8,4 @@ stripe==7.11.0
 python-dotenv==1.0.1
 requests==2.31.0
 pillow==10.2.0
-boto3==1.34.34
-STABLE_DIFFUSION_API_KEY=your_actual_api_key_here 
+boto3==1.34.34 
