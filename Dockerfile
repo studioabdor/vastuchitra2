@@ -6,6 +6,7 @@ WORKDIR /app
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
     build-essential \
+    bash \
     && rm -rf /var/lib/apt/lists/*
 
 # Copy requirements and install Python dependencies
@@ -17,6 +18,10 @@ RUN grep -v "STABLE_DIFFUSION_API_KEY" requirements.txt > requirements_clean.txt
 COPY vastuchitra-backend/ ./vastuchitra-backend/
 COPY vastuchitra-frontend/ ./vastuchitra-frontend/
 
+# Make the startup script executable
+COPY vastuchitra-backend/start.sh /app/start.sh
+RUN chmod +x /app/start.sh
+
 # Set environment variables
 ENV PYTHONPATH=/app
 ENV STABLE_DIFFUSION_API_KEY=${STABLE_DIFFUSION_API_KEY}
@@ -24,5 +29,5 @@ ENV STABLE_DIFFUSION_API_KEY=${STABLE_DIFFUSION_API_KEY}
 # Expose the ports
 EXPOSE 8000 3000
 
-# Start the backend service
-CMD ["python", "-m", "vastuchitra-backend.main"] 
+# Start the backend service using the startup script
+CMD ["/bin/bash", "/app/start.sh"] 
