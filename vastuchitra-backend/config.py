@@ -7,6 +7,7 @@ class Config:
     # API Keys
     STABLE_DIFFUSION_API_KEY = os.getenv("STABLE_DIFFUSION_API_KEY")
     STRIPE_SECRET_KEY = os.getenv("STRIPE_SECRET_KEY")
+    VITE_STRIPE_PUBLISHABLE_KEY = os.getenv("VITE_STRIPE_PUBLISHABLE_KEY")
     
     # URLs
     FRONTEND_URL = os.getenv("FRONTEND_URL", "http://localhost:5173")
@@ -28,7 +29,8 @@ class Config:
         """Validate that all required environment variables are set"""
         required_vars = [
             "STABLE_DIFFUSION_API_KEY",
-            "STRIPE_SECRET_KEY"
+            "STRIPE_SECRET_KEY",
+            "VITE_STRIPE_PUBLISHABLE_KEY"
         ]
         
         missing_vars = [var for var in required_vars if not getattr(cls, var)]
