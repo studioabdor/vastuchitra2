@@ -2,32 +2,27 @@ FROM python:3.11-slim
 
 WORKDIR /app
 
-# Install system dependencies
+# Install only essential system packages
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
-    build-essential \
-    bash \
+    gcc \
     && rm -rf /var/lib/apt/lists/*
 
-# Copy requirements and install Python dependencies
+# Copy and install requirements
 COPY vastuchitra-backend/requirements.txt .
-RUN grep -v "STABLE_DIFFUSION_API_KEY" requirements.txt > requirements_clean.txt && \
-    pip install --no-cache-dir -r requirements_clean.txt
+RUN pip install --no-cache-dir -r requirements.txt
 
-# Copy the application code
+# Copy application code
 COPY vastuchitra-backend/ ./vastuchitra-backend/
 COPY vastuchitra-frontend/ ./vastuchitra-frontend/
-
-# Make the startup script executable
-COPY vastuchitra-backend/start.sh /app/start.sh
-RUN chmod +x /app/start.sh
 
 # Set environment variables
 ENV PYTHONPATH=/app
 ENV STABLE_DIFFUSION_API_KEY=${STABLE_DIFFUSION_API_KEY}
+ENV PORT=8000
 
-# Expose the ports
-EXPOSE 8000 3000
+# Expose port
+EXPOSE 8000
 
-# Start the backend service using the startup script
-CMD ["/bin/bash", "/app/start.sh"] 
+# Run the application with uvicorn
+ENTRYPOINT ["uvicorn", "vastuchitra-backend.main:app", "--host", "0.0.0.0", "--port", "8000"] 
