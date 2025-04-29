@@ -1,19 +1,12 @@
 {
   "hosting": {
-    "public": "build",
-    "ignore": [
-      "firebase.json",
-      "**/.*",
-      "**/node_modules/**"
-    ],
+    "public": "vastuchitra-frontend/build",
+    "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
     "rewrites": [
       {
         "source": "**",
-        "destination": "/vastuchitraBackend"
+        "destination": "index.html"
       }
     ]
-  },
-  "functions": {
-    "source": "functions"
   }
 }
