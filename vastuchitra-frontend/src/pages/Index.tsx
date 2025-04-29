@@ -1,13 +1,13 @@
 
-import React, { useState } from 'react';
+import React, { useState, lazy, Suspense } from 'react';
 import Logo from '@/components/Logo';
-import GeneratorForm from '@/components/GeneratorForm';
-import ResultDisplay from '@/components/ResultDisplay';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import { useToast } from '@/components/ui/use-toast';
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
+
+
 import { useNavigate } from 'react-router-dom';
 
 const Index = () => {
@@ -43,6 +43,13 @@ const Index = () => {
     setShowIntroDialog(false);
     localStorage.setItem('hasSeenIntro', 'true');
   };
+
+  const GeneratorForm = lazy(() => import('@/components/GeneratorForm'));
+  const ResultDisplay = lazy(() => import('@/components/ResultDisplay'));
+  const IntroDialogContent = lazy(() => import('@/components/IntroDialogContent'));
+  const SampleDesigns = lazy(() => import('@/components/SampleDesigns'));
+
+
 
   return (
     <div className="min-h-screen pattern-bg">

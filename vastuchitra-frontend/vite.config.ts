@@ -10,11 +10,16 @@ export default defineConfig(({ mode }) => ({
     port: 8080,
   },
   plugins: [
+    react({jsxRuntime:"classic"}),
     react(),
     mode === 'development' &&
     componentTagger(),
   ].filter(Boolean),
+  build: {
+    outDir: "build"
+  },
   resolve: {
+    root:path.resolve(__dirname,"."),
     alias: {
       "@": path.resolve(__dirname, "./src"),
     },

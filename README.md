@@ -1,17 +1,17 @@
 # VastuChitra
 
-An AI-powered architectural image generation platform that creates stunning architectural visualizations using Stable Diffusion.
+An AI-powered architectural image generation platform for creating architectural visualizations with Stable Diffusion.
 
 ## Project Structure
 
-The project is split into two main components:
+The project is structured into two main components:
 
-### Backend (`vastuchitra-backend/`)
-- FastAPI-based REST API
+### Backend (`functions/src/backend`)
+- FastAPI-based REST API. This directory contains all backend code.
 - Stable Diffusion integration
 - Stripe payment processing
 - Rate limiting and error handling
-- Health check endpoints
+- Health check endpoints.
 
 ### Frontend (`vastuchitra-frontend/`)
 - React + TypeScript application

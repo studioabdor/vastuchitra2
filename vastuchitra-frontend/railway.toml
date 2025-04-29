@@ -8,3 +8,9 @@ healthcheckPath = "/"
 healthcheckTimeout = 100
 restartPolicyType = "on_failure"
 restartPolicyMaxRetries = 10 
+
+[deploy.env]
+VITE_API_URL = "YOUR_API_URL"
+VITE_STRIPE_PUBLISHABLE_KEY = "YOUR_STRIPE_PUBLISHABLE_KEY"
+VITE_ENABLE_ANALYTICS = "false"
+VITE_ENABLE_ERROR_REPORTING = "false"

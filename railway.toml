@@ -1,12 +1,13 @@
 [build]
 builder = "nixpacks"
-buildCommand = "pip install -r vastuchitra-backend/requirements.txt"
+buildCommand = "pip install -r functions/src/backend/requirements.txt"
 
 [deploy]
-startCommand = "uvicorn vastuchitra-backend.main:app --host 0.0.0.0 --port $PORT"
+startCommand = "uvicorn functions.src.backend.main:app --host 0.0.0.0 --port $PORT"
 healthcheckPath = "/health"
 healthcheckTimeout = 300
 healthcheckInterval = "30s"
+
 restartPolicyType = "on_failure"
 restartPolicyMaxRetries = 10
 
@@ -15,4 +16,4 @@ PYTHONPATH = "/app"
 PORT = "8000"
 
 [phases.setup]
-nixPkgs = ["python39", "nodejs"] 
+nixPkgs = ["python39"]
