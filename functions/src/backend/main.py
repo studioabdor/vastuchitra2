@@ -4,7 +4,6 @@ from pydantic import BaseModel
 from typing import Optional
 import stripe
 import os
-import requests
 from services.stable_diffusion import StableDiffusionService
 from firebase_functions import https_fn, options
 from firebase_admin import initialize_app
@@ -12,7 +11,6 @@ from firebase_functions.core import CallableRequest
 from fastapi import Request
 from fastapi.responses import JSONResponse
 import functions_framework
-import uvicorn
 import os
 from config import Config
 from middleware import error_handling_middleware, RateLimitMiddleware
